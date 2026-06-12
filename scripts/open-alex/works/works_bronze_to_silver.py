@@ -6,7 +6,8 @@ from utils import (
     create_timestamp_column,
     join_abstract_indexes_from_polars_column,
     generate_producao_autor_df,
-    extract_journal_info
+    extract_journal_info,
+    get_latest_date,
 )
 import polars as pl
 from datetime import datetime
@@ -20,9 +21,10 @@ class WorksBronzeToSilver:
         self.source_name = "open-alex"
         self.entity = "works"
         
+        bronze_works_date = get_latest_date("01-bronze", "open-alex", "works") or self.execution_date_str
         self.bronze_read_path = build_data_storage_path(
             medallion_layer="01-bronze",
-            date="24052026",
+            date=bronze_works_date,
             source_name=self.source_name,
             entity=self.entity
         )

@@ -1,7 +1,8 @@
 from utils import (
     build_data_storage_path,
     save_parquet_into_data_storage,
-    get_open_alex_data_request
+    get_open_alex_data_request,
+    get_latest_date
     )
 import polars as pl
 from datetime import datetime
@@ -21,9 +22,10 @@ class AuthorsApiToBronze:
             source_name=self.source_name,
             entity=self.entity
         )
+        bronze_lattes_date = get_latest_date("01-bronze", "lattes", "pesquisadores") or self.execution_date_str
         self.bronze_pesquisadores_path = build_data_storage_path(
             medallion_layer="01-bronze",
-            date='17052026',
+            date=bronze_lattes_date,
             source_name="lattes",
             entity="pesquisadores",
         )

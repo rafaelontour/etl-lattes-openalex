@@ -68,3 +68,27 @@ pipeline-etl/data-storage/
 │          └── producoes/
 
 ```
+
+----------------------------------------------------------------------------
+
+## Como rodar
+
+1. Subir o PostgreSQL primeiro — o pipeline precisa do banco pra carregar os dados
+2. Rodar o ETL — extrai, transforma e carrega no banco
+3. Subir backend + frontend
+# 1. Sobe o banco (só o postgres)
+docker compose up -d postgres
+
+# 2. Roda o pipeline ETL completo (dados lattes + OpenAlex → PostgreSQL)
+uv run python run_pipeline.py
+
+# 3. Sobe o backend FastAPI
+docker compose up -d backend
+
+# 4. Sobe o frontend (em outro terminal)
+cd frontend && npm install && npm run dev
+Importante: O docker compose up sobe tanto postgres quanto backend. Se você rodar run_pipeline.py sem o postgres estar rodando, ele vai pular a carga no banco (não quebra, mas os dados ficam só nos parquets gold).
+Resumo de portas:
+- PostgreSQL: 5432
+- Backend API: 8000
+- Frontend: 3000

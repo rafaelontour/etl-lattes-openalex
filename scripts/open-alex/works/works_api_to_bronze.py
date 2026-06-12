@@ -2,7 +2,8 @@ from utils import (
     build_data_storage_path,
     save_parquet_into_data_storage,
     get_open_alex_data_request,
-    get_num_paginas_openalex
+    get_num_paginas_openalex,
+    get_latest_date,
 )
 import polars as pl
 import json
@@ -25,9 +26,10 @@ class WorksApiToBronze:
         )
         
         # Path read authors parquet file
+        silver_authors_date = get_latest_date("02-silver", "open-alex", "authors") or self.execution_date_str
         self.silver_authors_path = build_data_storage_path(
             medallion_layer="02-silver",
-            date="22052026",
+            date=silver_authors_date,
             source_name=self.source_name,
             entity="authors",
         )

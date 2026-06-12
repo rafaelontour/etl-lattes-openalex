@@ -1,6 +1,16 @@
+import sys
 import polars as pl
+from pathlib import Path
+
+_THIS_FILE = Path(__file__).resolve()
+_SCRIPTS_ROOT = str(_THIS_FILE.parent.parent)
+_LATTES_DIR = str(_THIS_FILE.parent)
+for _p in [_SCRIPTS_ROOT, _LATTES_DIR]:
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 from utils import (build_data_storage_path, save_parquet_into_data_storage,
-                   select_and_rename_polars_columns, create_timestamp_column)
+                   select_and_rename_polars_columns, create_timestamp_column, get_latest_date)
 from utils_pesquisadores import convert_string_columns_to_date
 
 
@@ -13,15 +23,18 @@ class PesquisadoresBronzeToSilver:
         self.entity_pesquisadores = "pesquisadores"
         self.entity_authors = "authors"
         
+        bronze_pesq_date = get_latest_date("01-bronze", "lattes", "pesquisadores") or self.execution_date_str
+        silver_authors_date = get_latest_date("02-silver", "open-alex", "authors") or self.execution_date_str
+        
         self.read_bronze_pesquisadores_path = build_data_storage_path(
             medallion_layer="01-bronze",
-            date="17052026",
+            date=bronze_pesq_date,
             source_name=self.source_name,
             entity=self.entity_pesquisadores,
         )
         self.read_silver_authors_path = build_data_storage_path(
             medallion_layer="02-silver",
-            date="24052026",
+            date=silver_authors_date,
             source_name="open-alex",
             entity=self.entity_authors,
         )

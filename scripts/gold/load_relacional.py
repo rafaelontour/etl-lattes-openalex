@@ -15,16 +15,12 @@ from create_dim_tempo import generate_dim_tempo
 
 load_dotenv()
 
-SILVER_DATE = "24052026"
-GOLD_DATE = "24052026"
+_THIS_DIR = Path(__file__).resolve().parent
+_SCRIPTS_DIR = str(_THIS_DIR.parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
 
-_SILVER_LATTES_BASE = Path(__file__).resolve().parent.parent.parent / "data-storage" / "02-silver" / "lattes"
-_LATEST_LATTES_DATE = SILVER_DATE
-if _SILVER_LATTES_BASE.exists():
-    _dates = sorted([d.name for d in _SILVER_LATTES_BASE.iterdir() if d.is_dir()],
-                    key=lambda x: (x[4:8], x[2:4], x[0:2]))  # sort by yyyy, mm, dd
-    if _dates:
-        _LATEST_LATTES_DATE = _dates[-1]
+from scripts.utils import get_latest_date
 
 DB_CONFIG = {
     "host": os.getenv("POSTGRES_HOST", "localhost"),
@@ -37,6 +33,13 @@ SCHEMA = os.getenv("POSTGRES_SCHEMA_RELATIONAL", "relacional")
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 DATA_STORAGE = BASE_DIR / "data-storage"
+
+
+def _resolve_silver_date(silver_date: str | None = None) -> str:
+    if silver_date:
+        return silver_date
+    d = get_latest_date("02-silver", "lattes", "pesquisadores")
+    return d if d else "24052026"
 
 
 def get_conn():
@@ -138,7 +141,7 @@ def create_tables(conn):
 
 
 def read_silver(entity: str, source: str = "open-alex", date: str | None = None) -> pl.DataFrame:
-    date = date or SILVER_DATE
+    date = date or _resolve_silver_date()
     path = DATA_STORAGE / "02-silver" / source / date / entity
     files = list(path.glob(f"{entity}_*.parquet"))
     if not files:
@@ -263,7 +266,7 @@ def load_autoria(conn):
 
 def load_formacao(conn):
     print("\n[RELACIONAL] Carregando formacoes...")
-    df = read_silver("formacoes", "lattes", date=_LATEST_LATTES_DATE)
+    df = read_silver("formacoes", "lattes")
     if df.is_empty():
         return
 
@@ -285,7 +288,7 @@ def load_formacao(conn):
 
 def load_area_atuacao(conn):
     print("\n[RELACIONAL] Carregando areas de atuacao...")
-    df = read_silver("areas_atuacao", "lattes", date=_LATEST_LATTES_DATE)
+    df = read_silver("areas_atuacao", "lattes")
     if df.is_empty():
         return
 
@@ -305,10 +308,13 @@ def load_area_atuacao(conn):
     print(f"  Inseridos {len(records)} registros de area_atuacao")
 
 
-def execute():
+def execute(silver_date: str | None = None, gold_date: str | None = None):
     print("=" * 60)
     print("CAMADA GOLD - BANCO RELACIONAL (PostgreSQL + pgvector)")
     print("=" * 60)
+
+    _date = _resolve_silver_date(silver_date)
+    globals()["SILVER_DATE"] = _date  # make it available for read_silver
 
     try:
         conn = get_conn()
@@ -331,4 +337,7 @@ def execute():
 
 
 if __name__ == "__main__":
-    execute()
+    import sys
+    silver = sys.argv[1] if len(sys.argv) > 1 else None
+    gold = sys.argv[2] if len(sys.argv) > 2 else None
+    execute(silver_date=silver, gold_date=gold)

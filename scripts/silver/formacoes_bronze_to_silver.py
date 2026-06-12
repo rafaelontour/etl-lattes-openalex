@@ -1,5 +1,5 @@
 import polars as pl
-from utils import build_data_storage_path, save_parquet_into_data_storage, create_timestamp_column
+from utils import build_data_storage_path, save_parquet_into_data_storage, create_timestamp_column, get_latest_date
 
 
 class FormacoesBronzeToSilver:
@@ -10,9 +10,10 @@ class FormacoesBronzeToSilver:
         self.source_name = "lattes"
         self.entity = "formacoes"
 
+        bronze_date = get_latest_date("01-bronze", "lattes", "formacoes") or self.execution_date_str
         self.bronze_read_path = build_data_storage_path(
             medallion_layer="01-bronze",
-            date="17052026",
+            date=bronze_date,
             source_name=self.source_name,
             entity=self.entity,
         )

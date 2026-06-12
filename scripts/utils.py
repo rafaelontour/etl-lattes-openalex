@@ -85,6 +85,31 @@ def find_project_root(
     )
 
 
+def get_latest_date(
+    medallion_layer: str,
+    source_name: str,
+    entity: str | None = None,
+    project_root: Path | None = None,
+    pipeline_dir: str = "pipeline-etl",
+    data_storage_dir: str = "data-storage",
+) -> str | None:
+    """Scan data-storage for the latest available date directory in a given layer/source.
+
+    Returns the date string (DDMMYYYY) of the most recent directory, or None if not found.
+    """
+    project_root = find_project_root() if project_root is None else project_root
+    base = project_root / pipeline_dir / data_storage_dir / medallion_layer / source_name
+    if not base.exists():
+        return None
+    dates = [d.name for d in base.iterdir() if d.is_dir()]
+    if entity:
+        dates = [d for d in dates if (base / d / entity).exists()]
+    if not dates:
+        return None
+    dates.sort(key=lambda x: (x[4:8], x[2:4], x[0:2]))
+    return dates[-1]
+
+
 def build_data_storage_path(
     medallion_layer: str,
     date: str,

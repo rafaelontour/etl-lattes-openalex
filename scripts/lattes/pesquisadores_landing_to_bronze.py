@@ -1,8 +1,18 @@
+import sys
 import zipfile
 import xmltodict
 import polars as pl
 from typing import Dict, Any, Optional, List
 from datetime import datetime
+from pathlib import Path
+
+_THIS_FILE = Path(__file__).resolve()
+_SCRIPTS_ROOT = str(_THIS_FILE.parent.parent)
+_LATTES_DIR = str(_THIS_FILE.parent)
+for _p in [_SCRIPTS_ROOT, _LATTES_DIR]:
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 from utils import build_data_storage_path, save_parquet_into_data_storage
 from utils_pesquisadores import (
     extract_dados_gerais,
@@ -41,7 +51,7 @@ class PesquisadoresLandingToBronze:
             entity=self.entity_areas_atuacao,
         )
         
-        self.landing_path = "lattesNAPI.zip"    
+        self.landing_path = str(_THIS_FILE.parent.parent.parent / "data-storage" / "00-landing" / "lattesNAPI.zip")    
                
     def list_xml_files(self) -> List[str]:
         with zipfile.ZipFile(self.landing_path, 'r') as z:

@@ -14,7 +14,12 @@ from create_dim_tempo import generate_dim_tempo
 
 load_dotenv()
 
-SILVER_DATE = "24052026"
+_THIS_DIR = Path(__file__).resolve().parent
+_SCRIPTS_DIR = str(_THIS_DIR.parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+
+from scripts.utils import get_latest_date
 
 DB_CONFIG = {
     "host": os.getenv("POSTGRES_HOST", "localhost"),
@@ -27,6 +32,13 @@ SCHEMA = os.getenv("POSTGRES_SCHEMA_STAR", "star_schema")
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 DATA_STORAGE = BASE_DIR / "data-storage"
+
+
+def _resolve_silver_date(silver_date: str | None = None) -> str:
+    if silver_date:
+        return silver_date
+    d = get_latest_date("02-silver", "lattes", "pesquisadores")
+    return d if d else "24052026"
 
 
 def get_conn():
@@ -114,8 +126,9 @@ def create_tables(conn):
             cur.execute(stmt)
 
 
-def read_silver(entity: str, source: str = "open-alex") -> pl.DataFrame:
-    path = DATA_STORAGE / "02-silver" / source / SILVER_DATE / entity
+def read_silver(entity: str, source: str = "open-alex", date: str | None = None) -> pl.DataFrame:
+    date = date or _resolve_silver_date()
+    path = DATA_STORAGE / "02-silver" / source / date / entity
     files = list(path.glob(f"{entity}_*.parquet"))
     if not files:
         return pl.DataFrame()
@@ -307,10 +320,13 @@ def load_fato_producao(conn):
     print(f"  Inseridos {len(records)} registros na fato_producao")
 
 
-def execute():
+def execute(silver_date: str | None = None):
     print("=" * 60)
     print("CAMADA GOLD - STAR SCHEMA (Power BI)")
     print("=" * 60)
+
+    _date = _resolve_silver_date(silver_date)
+    globals()["SILVER_DATE"] = _date
 
     try:
         conn = get_conn()
@@ -334,4 +350,6 @@ def execute():
 
 
 if __name__ == "__main__":
-    execute()
+    import sys
+    silver = sys.argv[1] if len(sys.argv) > 1 else None
+    execute(silver_date=silver)
