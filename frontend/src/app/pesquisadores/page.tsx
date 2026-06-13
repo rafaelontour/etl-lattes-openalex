@@ -96,9 +96,19 @@ function PesquisadoresContent() {
               className="group rounded-xl border border-zinc-200 bg-white p-5 transition-all hover:border-blue-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-blue-800"
             >
               <div className="flex items-start justify-between">
-                <h2 className="font-semibold text-zinc-900 group-hover:text-blue-600 dark:text-zinc-100">
-                  {p.nome_completo}
-                </h2>
+                <div className="flex items-center gap-3 min-w-0">
+                  {p.id_photo_lattes && (
+                    <img
+                      src={`http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=${p.id_photo_lattes}`}
+                      alt={`Foto de ${p.nome_completo}`}
+                      className="h-10 w-10 shrink-0 rounded-full border border-zinc-200 object-cover dark:border-zinc-700"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                    />
+                  )}
+                  <h2 className="font-semibold text-zinc-900 group-hover:text-blue-600 dark:text-zinc-100 truncate">
+                    {p.nome_completo}
+                  </h2>
+                </div>
                 <ExternalLink className="h-4 w-4 shrink-0 text-zinc-300 group-hover:text-blue-500" />
               </div>
               <div className="mt-3 grid grid-cols-3 gap-3 text-center text-xs">

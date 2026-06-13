@@ -19,6 +19,7 @@ export interface PesquisadorResumo {
   qtd_citacoes_pesquisador: number | null;
   instituicao_empresa: string | null;
   nacionalidade: string | null;
+  id_photo_lattes: string | null;
 }
 
 export interface PesquisadorDetalhe extends PesquisadorResumo {
