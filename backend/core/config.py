@@ -6,11 +6,11 @@ _ENV_FILE = _PROJECT_ROOT / ".env"
 
 
 class Settings(BaseSettings):
-    postgres_host: str = "localhost"
+    postgres_host: str = "db.pjhwlxdcyaeuyrrlxkwg.supabase.co"
     postgres_port: int = 5432
-    postgres_db: str = "lattes_gold"
+    postgres_db: str = "post"
     postgres_user: str = "postgres"
-    postgres_password: str = "postgres"
+    postgres_password: str = "umdoistres45"
     openai_api_key: str = ""
 
     model_config = {
