@@ -159,7 +159,17 @@ export default function PesquisadorDetalhePage() {
 
       {/* Header */}
       <div className="rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
-        <h1 className="text-2xl font-bold">{pesquisador.nome_completo}</h1>
+        <div className="flex items-center gap-5">
+          {pesquisador.id_photo_lattes && (
+            <img
+              src={`http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=${pesquisador.id_photo_lattes}`}
+              alt={`Foto de ${pesquisador.nome_completo}`}
+              className="h-20 w-20 shrink-0 rounded-full border border-zinc-200 object-cover dark:border-zinc-700"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+            />
+          )}
+          <h1 className="text-2xl font-bold">{pesquisador.nome_completo}</h1>
+        </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {pesquisador.instituicao_empresa && (
             <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">

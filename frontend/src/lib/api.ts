@@ -25,6 +25,7 @@ export interface PesquisadorDetalhe extends PesquisadorResumo {
   resumo_cv: string | null;
   nome_orgao: string | null;
   data_atualizacao_lattes: string | null;
+  id_photo_lattes: string | null;
 }
 
 export interface Formacao {
