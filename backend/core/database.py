@@ -13,7 +13,6 @@ async def get_pool() -> asyncpg.Pool:
             database=settings.postgres_db,
             user=settings.postgres_user,
             password=settings.postgres_password,
-            ssl=True,
             min_size=0,
             max_size=5,
         )

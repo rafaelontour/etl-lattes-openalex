@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from backend.core.database import close_pool
 from backend.routers import pesquisadores, producoes, metricas, busca, areas
+from backend.core import settings
 
 
 @asynccontextmanager
@@ -41,3 +42,13 @@ app.include_router(areas.router)
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+@app.get("/debug-db")
+async def debug_db():
+    return {
+        "host": settings.postgres_host,
+        "port": settings.postgres_port,
+        "db": settings.postgres_db,
+        "user": settings.postgres_user,
+    }
