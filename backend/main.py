@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from backend.core.database import close_pool
 from backend.routers import pesquisadores, producoes, metricas, busca, areas
-from backend.core import settings
+from backend.core.config import settings
 
 
 @asynccontextmanager
