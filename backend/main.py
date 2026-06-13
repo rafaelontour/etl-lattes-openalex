@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from core.database import close_pool
-from routers import pesquisadores, producoes, metricas, busca, areas
+from backend.core.database import close_pool
+from backend.routers import pesquisadores, producoes, metricas, busca, areas
 
 
 @asynccontextmanager
