@@ -18,6 +18,7 @@ class PesquisadorDetalhe(PesquisadorResumo):
     resumo_cv: Optional[str] = None
     nome_orgao: Optional[str] = None
     data_atualizacao_lattes: Optional[str] = None
+    id_photo_lattes: Optional[str] = None
 
 
 class Formacao(BaseModel):
