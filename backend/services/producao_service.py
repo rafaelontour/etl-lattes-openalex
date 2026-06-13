@@ -9,10 +9,7 @@ async def listar_producoes(
     tipo: Optional[str] = None,
     idioma: Optional[str] = None,
     journal: Optional[str] = None,
-<<<<<<< HEAD
-=======
     titulo: Optional[str] = None,
->>>>>>> cf92a72 (atualizando)
     page: int = 1,
     limit: int = 20,
 ) -> list[ProducaoResumo]:
@@ -41,25 +38,15 @@ async def listar_producoes(
         conditions.append(f"LOWER(journal_name) LIKE LOWER(${idx})")
         params.append(f"%{journal}%")
         idx += 1
-<<<<<<< HEAD
-=======
     if titulo:
         conditions.append(f"LOWER(titulo) LIKE LOWER(${idx})")
         params.append(f"%{titulo}%")
         idx += 1
->>>>>>> cf92a72 (atualizando)
 
     where = " AND ".join(conditions) if conditions else "TRUE"
     offset = (page - 1) * limit
 
     query = f"""
-<<<<<<< HEAD
-        SELECT openalex_id, titulo, ano_publicacao, tipo_producao,
-               qtd_citacoes_producao, journal_name, idioma
-        FROM relacional.producao
-        WHERE {where}
-        ORDER BY ano_publicacao DESC NULLS LAST
-=======
         SELECT p.openalex_id, p.titulo, p.ano_publicacao, p.tipo_producao,
                p.qtd_citacoes_producao, p.journal_name, p.idioma,
                (SELECT pe.nome_completo
@@ -71,7 +58,6 @@ async def listar_producoes(
         FROM relacional.producao p
         WHERE {where}
         ORDER BY p.ano_publicacao DESC NULLS LAST
->>>>>>> cf92a72 (atualizando)
         LIMIT ${idx} OFFSET ${idx + 1}
     """
     params.append(limit)
@@ -86,9 +72,6 @@ async def obter_producao(openalex_id: str) -> Optional[ProducaoDetalhe]:
     pool = await get_pool()
     async with pool.acquire() as conn:
         row = await conn.fetchrow(
-<<<<<<< HEAD
-            """SELECT * FROM relacional.producao WHERE openalex_id = $1""",
-=======
             """SELECT p.*,
                       (SELECT pe.nome_completo
                        FROM relacional.autoria a
@@ -97,7 +80,6 @@ async def obter_producao(openalex_id: str) -> Optional[ProducaoDetalhe]:
                        ORDER BY a.ordem_autoria
                        LIMIT 1) AS pesquisador
                FROM relacional.producao p WHERE p.openalex_id = $1""",
->>>>>>> cf92a72 (atualizando)
             openalex_id,
         )
     return ProducaoDetalhe(**dict(row)) if row else None
@@ -110,11 +92,7 @@ async def listar_autores(openalex_id: str) -> list[ProducaoAutor]:
             """SELECT a.nome_autor, a.ordem_autoria, a.autor_principal,
                       a.correspondente, a.afiliacao_autor
                FROM relacional.autoria a
-<<<<<<< HEAD
-               WHERE a.openalex_id = $1
-=======
                WHERE a.openalex_producao_id = $1
->>>>>>> cf92a72 (atualizando)
                ORDER BY a.ordem_autoria""",
             openalex_id,
         )
@@ -147,11 +125,6 @@ async def listar_producoes_pesquisador(
 
     query = f"""
         SELECT p.openalex_id, p.titulo, p.ano_publicacao, p.tipo_producao,
-<<<<<<< HEAD
-               p.qtd_citacoes_producao, p.journal_name, p.idioma
-        FROM relacional.producao p
-        JOIN relacional.autoria a ON a.openalex_id = p.openalex_id
-=======
                p.qtd_citacoes_producao, p.journal_name, p.idioma,
                (SELECT pe.nome_completo
                 FROM relacional.autoria a2
@@ -161,7 +134,6 @@ async def listar_producoes_pesquisador(
                 LIMIT 1) AS pesquisador
         FROM relacional.producao p
         JOIN relacional.autoria a ON a.openalex_producao_id = p.openalex_id
->>>>>>> cf92a72 (atualizando)
         WHERE {where}
         ORDER BY p.ano_publicacao DESC NULLS LAST
         LIMIT ${idx} OFFSET ${idx + 1}

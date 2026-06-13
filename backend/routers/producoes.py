@@ -13,18 +13,11 @@ async def listar_producoes(
     tipo: Optional[str] = Query(None),
     idioma: Optional[str] = Query(None),
     journal: Optional[str] = Query(None),
-<<<<<<< HEAD
-    page: int = Query(1, ge=1),
-    limit: int = Query(20, ge=1, le=100),
-):
-    return await producao_service.listar_producoes(ano_min, ano_max, tipo, idioma, journal, page, limit)
-=======
     titulo: Optional[str] = Query(None),
     page: int = Query(1, ge=1),
     limit: int = Query(20, ge=1, le=100),
 ):
     return await producao_service.listar_producoes(ano_min, ano_max, tipo, idioma, journal, titulo, page, limit)
->>>>>>> cf92a72 (atualizando)
 
 
 @router.get("/tipos", response_model=list[str])

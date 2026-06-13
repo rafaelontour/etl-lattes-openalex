@@ -10,10 +10,7 @@ class ProducaoResumo(BaseModel):
     qtd_citacoes_producao: Optional[int] = None
     journal_name: Optional[str] = None
     idioma: Optional[str] = None
-<<<<<<< HEAD
-=======
     pesquisador: Optional[str] = None
->>>>>>> cf92a72 (atualizando)
 
 
 class ProducaoDetalhe(ProducaoResumo):

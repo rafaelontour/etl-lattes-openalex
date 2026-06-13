@@ -2,11 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from core.database import close_pool
-<<<<<<< HEAD
-from routers import pesquisadores, producoes, metricas, busca
-=======
 from routers import pesquisadores, producoes, metricas, busca, areas
->>>>>>> cf92a72 (atualizando)
 
 
 @asynccontextmanager
@@ -34,10 +30,7 @@ app.include_router(pesquisadores.router)
 app.include_router(producoes.router)
 app.include_router(metricas.router)
 app.include_router(busca.router)
-<<<<<<< HEAD
-=======
 app.include_router(areas.router)
->>>>>>> cf92a72 (atualizando)
 
 
 @app.get("/health")

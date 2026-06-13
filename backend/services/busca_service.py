@@ -1,10 +1,4 @@
 import json
-<<<<<<< HEAD
-import numpy as np
-from typing import Optional
-from core.database import get_pool
-from models.busca import ResultadoBusca
-=======
 import os
 import sys
 from typing import Optional
@@ -14,7 +8,6 @@ from models.busca import ResultadoBusca, Sugestao
 _PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 if _PROJECT_ROOT not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT)
->>>>>>> cf92a72 (atualizando)
 
 self_query_service = None
 try:
@@ -33,37 +26,6 @@ async def buscar_vetorial(
     limite: int = 20,
 ) -> list[ResultadoBusca]:
     pool = await get_pool()
-<<<<<<< HEAD
-    conditions = []
-    params = [json.dumps(embedding)]
-    idx = 2
-
-    if filtros:
-        if filtros.get("ano_min"):
-            conditions.append(f"p.ano_publicacao >= ${idx}")
-            params.append(filtros["ano_min"])
-            idx += 1
-        if filtros.get("ano_max"):
-            conditions.append(f"p.ano_publicacao <= ${idx}")
-            params.append(filtros["ano_max"])
-            idx += 1
-        if filtros.get("tipo"):
-            conditions.append(f"LOWER(p.tipo_producao) = LOWER(${idx})")
-            params.append(filtros["tipo"])
-            idx += 1
-
-    where = " AND ".join(conditions) if conditions else "TRUE"
-
-    query = f"""
-        SELECT p.openalex_id, p.titulo, p.abstract, p.ano_publicacao,
-               p.tipo_producao, p.journal_name,
-               1 - (p.embedding_titulo <=> ${1}::vector) AS score,
-               pe.nome_completo AS pesquisador
-        FROM relacional.producao p
-        LEFT JOIN relacional.autoria a ON a.openalex_id = p.openalex_id AND a.autor_principal = TRUE
-        LEFT JOIN relacional.pesquisador pe ON pe.lattes_id = a.lattes_id
-        WHERE {where}
-=======
     params = [json.dumps(embedding)]
     idx = 2
 
@@ -125,7 +87,6 @@ async def buscar_vetorial(
             FROM relacional.pesquisador pe
             WHERE pe.resumo_embedding IS NOT NULL
         ) AS combined
->>>>>>> cf92a72 (atualizando)
         ORDER BY score DESC
         LIMIT ${idx}
     """
@@ -144,11 +105,6 @@ async def buscar_vetorial(
             journal_name=r["journal_name"],
             score=float(r["score"]) if r["score"] is not None else None,
             pesquisador=r["pesquisador"],
-<<<<<<< HEAD
-        )
-        for r in rows
-    ]
-=======
             lattes_id=r["lattes_id"],
             tipo_resultado=r["tipo_resultado"],
             doi=r["doi"],
@@ -196,4 +152,3 @@ async def sugerir(
         rows = await conn.fetch(query, prefixo, limite)
 
     return [Sugestao(texto=r["texto"], tipo=r["tipo"]) for r in rows]
->>>>>>> cf92a72 (atualizando)

@@ -1,12 +1,8 @@
 from fastapi import APIRouter, Query, HTTPException
 from typing import Optional
 from models.pesquisador import PesquisadorResumo, PesquisadorDetalhe, Formacao, AreaAtuacao
-<<<<<<< HEAD
-from services import pesquisador_service
-=======
 from models.producao import ProducaoResumo
 from services import pesquisador_service, producao_service
->>>>>>> cf92a72 (atualizando)
 
 router = APIRouter(prefix="/pesquisadores", tags=["Pesquisadores"])
 
@@ -38,8 +34,6 @@ async def listar_formacao(lattes_id: str):
 @router.get("/{lattes_id}/areas", response_model=list[AreaAtuacao])
 async def listar_areas(lattes_id: str):
     return await pesquisador_service.listar_areas_atuacao(lattes_id)
-<<<<<<< HEAD
-=======
 
 
 @router.get("/{lattes_id}/producoes", response_model=list[ProducaoResumo])
@@ -53,4 +47,3 @@ async def listar_producoes_pesquisador(
     return await producao_service.listar_producoes_pesquisador(
         lattes_id, ano=ano, tipo=tipo, page=page, limit=limit,
     )
->>>>>>> cf92a72 (atualizando)

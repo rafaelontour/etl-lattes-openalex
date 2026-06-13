@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-from fastapi import APIRouter, HTTPException
-from models.busca import BuscaRequest, BuscaNaturalRequest, ResultadoBusca
-=======
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 from models.busca import BuscaRequest, BuscaNaturalRequest, ResultadoBusca, Sugestao
->>>>>>> cf92a72 (atualizando)
 from services import busca_service
 from services.busca_service import self_query_service
 
@@ -27,8 +22,6 @@ async def buscar_vetorial(body: BuscaRequest):
     )
 
 
-<<<<<<< HEAD
-=======
 @router.get("/sugestoes", response_model=list[Sugestao])
 async def sugerir(
     q: str = Query(min_length=1),
@@ -38,7 +31,6 @@ async def sugerir(
     return await busca_service.sugerir(prefixo=q, tipo=tipo, limite=limite)
 
 
->>>>>>> cf92a72 (atualizando)
 @router.post("/natural", response_model=dict)
 async def buscar_natural(body: BuscaNaturalRequest):
     if self_query_service is None:

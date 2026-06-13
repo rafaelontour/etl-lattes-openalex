@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-venv
-_pycache_
-.git
-.env
-=======
 # Python
 __pycache__/
 *.py[cod]
@@ -36,4 +30,3 @@ Thumbs.db
 
 # Docker
 .docker/
->>>>>>> f521d71 (backend feito)

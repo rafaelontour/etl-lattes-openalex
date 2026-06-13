@@ -14,11 +14,7 @@ class BuscaNaturalRequest(BaseModel):
 
 
 class ResultadoBusca(BaseModel):
-<<<<<<< HEAD
-    openalex_id: str
-=======
     openalex_id: Optional[str] = None
->>>>>>> cf92a72 (atualizando)
     titulo: Optional[str] = None
     abstract: Optional[str] = None
     ano_publicacao: Optional[int] = None
@@ -26,8 +22,6 @@ class ResultadoBusca(BaseModel):
     journal_name: Optional[str] = None
     score: Optional[float] = None
     pesquisador: Optional[str] = None
-<<<<<<< HEAD
-=======
     lattes_id: Optional[str] = None
     tipo_resultado: str = "producao"
     doi: Optional[str] = None
@@ -37,4 +31,3 @@ class ResultadoBusca(BaseModel):
 class Sugestao(BaseModel):
     texto: str
     tipo: str
->>>>>>> cf92a72 (atualizando)

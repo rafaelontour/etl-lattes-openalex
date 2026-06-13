@@ -34,8 +34,6 @@ class AreaAtuacao(BaseModel):
     nome_area: Optional[str] = None
     nome_sub_area: Optional[str] = None
     nome_especialidade: Optional[str] = None
-<<<<<<< HEAD
-=======
 
 
 class AreaResumo(BaseModel):
@@ -43,4 +41,3 @@ class AreaResumo(BaseModel):
     nome_area: Optional[str] = None
     nome_sub_area: Optional[str] = None
     total_pesquisadores: int
->>>>>>> cf92a72 (atualizando)

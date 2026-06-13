@@ -1,10 +1,6 @@
 from typing import Optional
 from core.database import get_pool
-<<<<<<< HEAD
-from models.pesquisador import PesquisadorResumo, PesquisadorDetalhe, Formacao, AreaAtuacao
-=======
 from models.pesquisador import PesquisadorResumo, PesquisadorDetalhe, Formacao, AreaAtuacao, AreaResumo
->>>>>>> cf92a72 (atualizando)
 
 
 async def listar_pesquisadores(
@@ -83,8 +79,6 @@ async def listar_areas_atuacao(lattes_id: str) -> list[AreaAtuacao]:
             lattes_id,
         )
     return [AreaAtuacao(**dict(r)) for r in rows]
-<<<<<<< HEAD
-=======
 
 
 async def listar_areas(
@@ -116,4 +110,3 @@ async def listar_areas(
                 limite,
             )
     return [AreaResumo(**dict(r)) for r in rows]
->>>>>>> cf92a72 (atualizando)
