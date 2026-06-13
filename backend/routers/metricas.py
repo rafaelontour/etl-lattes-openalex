@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
 from typing import Optional
-from core.database import get_pool
+from backend.core.database import get_pool
 
 router = APIRouter(tags=["Metricas"])
 

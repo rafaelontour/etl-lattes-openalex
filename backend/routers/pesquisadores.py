@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Query, HTTPException
 from typing import Optional
-from models.pesquisador import PesquisadorResumo, PesquisadorDetalhe, Formacao, AreaAtuacao
-from models.producao import ProducaoResumo
-from services import pesquisador_service, producao_service
+from backend.models.pesquisador import PesquisadorResumo, PesquisadorDetalhe, Formacao, AreaAtuacao
+from backend.models.producao import ProducaoResumo
+from backend.services import pesquisador_service, producao_service
 
 router = APIRouter(prefix="/pesquisadores", tags=["Pesquisadores"])
 

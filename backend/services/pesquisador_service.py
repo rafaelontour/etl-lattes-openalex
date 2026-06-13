@@ -1,6 +1,6 @@
 from typing import Optional
-from core.database import get_pool
-from models.pesquisador import PesquisadorResumo, PesquisadorDetalhe, Formacao, AreaAtuacao, AreaResumo
+from backend.core.database import get_pool
+from backend.models.pesquisador import PesquisadorResumo, PesquisadorDetalhe, Formacao, AreaAtuacao, AreaResumo
 
 
 async def listar_pesquisadores(

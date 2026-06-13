@@ -1,15 +1,15 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
-from models.busca import BuscaRequest, BuscaNaturalRequest, ResultadoBusca, Sugestao
-from services import busca_service
-from services.busca_service import self_query_service
+from backend.models.busca import BuscaRequest, BuscaNaturalRequest, ResultadoBusca, Sugestao
+from backend.services import busca_service
+from backend.services.busca_service import self_query_service
 
 router = APIRouter(prefix="/busca", tags=["Busca"])
 
 
 @router.post("", response_model=list[ResultadoBusca])
 async def buscar_vetorial(body: BuscaRequest):
-    from services.embedding_service import gerar_embedding
+    from backend.services.embedding_service import gerar_embedding
 
     embedding = gerar_embedding(body.texto)
     if embedding is None:

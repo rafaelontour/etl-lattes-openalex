@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 from typing import Optional
-from models.pesquisador import AreaResumo
-from services import pesquisador_service
+from backend.models.pesquisador import AreaResumo
+from backend.services import pesquisador_service
 
 router = APIRouter(prefix="/areas", tags=["Areas"])
 

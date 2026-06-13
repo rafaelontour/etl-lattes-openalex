@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query, HTTPException
 from typing import Optional
-from models.producao import ProducaoResumo, ProducaoDetalhe, ProducaoAutor
-from services import producao_service
+from backend.models.producao import ProducaoResumo, ProducaoDetalhe, ProducaoAutor
+from backend.services import producao_service
 
 router = APIRouter(prefix="/producoes", tags=["Producoes"])
 

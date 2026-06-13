@@ -1,6 +1,6 @@
 from typing import Optional
-from core.database import get_pool
-from models.producao import ProducaoResumo, ProducaoDetalhe, ProducaoAutor
+from backend.core.database import get_pool
+from backend.models.producao import ProducaoResumo, ProducaoDetalhe, ProducaoAutor
 
 
 async def listar_producoes(

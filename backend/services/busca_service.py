@@ -1,17 +1,11 @@
 import json
-import os
-import sys
 from typing import Optional
-from core.database import get_pool
-from models.busca import ResultadoBusca, Sugestao
-
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-if _PROJECT_ROOT not in sys.path:
-    sys.path.insert(0, _PROJECT_ROOT)
+from backend.core.database import get_pool
+from backend.models.busca import ResultadoBusca, Sugestao
 
 self_query_service = None
 try:
-    from scripts.gold.self_query_retriever import SelfQueryGold
+    from backend.scripts.gold.self_query_retriever import SelfQueryGold
     _sq = SelfQueryGold()
     _ok = _sq.setup()
     if _ok:
