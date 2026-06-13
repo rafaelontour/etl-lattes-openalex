@@ -105,7 +105,7 @@ class WorksApiToBronze:
             print(self.bronze_write_path)
             save_parquet_into_data_storage(df, self.bronze_write_path, self.execution_date_str, self.entity)
             print('Data fetched and saved successfully.')
-            return 0
+            return df
         else:
             print("No data fetched from OpenAlex API - Works.")
             return None

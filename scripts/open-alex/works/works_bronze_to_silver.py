@@ -134,7 +134,7 @@ class WorksBronzeToSilver:
             
             
             save_parquet_into_data_storage(df, self.silver_producao_write_path, self.execution_date_str, self.entity)
-            return 0
+            return df
         else:
             print("The Works parquet file in the bronze path is empty.")
             return None
