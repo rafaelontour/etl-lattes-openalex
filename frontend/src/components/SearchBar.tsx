@@ -126,11 +126,11 @@ export default function SearchBar({
   return (
     <form onSubmit={handleSubmit} className={`w-full ${isHome ? "max-w-2xl" : "max-w-xl"} relative`}>
       <div
-        className={`relative flex items-center rounded-xl border border-zinc-300 bg-white shadow-sm transition-all focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 dark:border-zinc-700 dark:bg-zinc-900 dark:focus-within:border-blue-500 dark:focus-within:ring-blue-900 ${
+        className={`relative flex items-center rounded-xl border border-sky-300 bg-white shadow-sm transition-all focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100 dark:border-zinc-700 dark:bg-zinc-900 dark:focus-within:border-sky-600 dark:focus-within:ring-sky-900 ${
           isHome ? "h-16 text-lg" : "h-12 text-base"
         }`}
       >
-        <div className="flex h-full items-center pl-4 pr-2 text-zinc-400">
+        <div className="flex h-full items-center pl-4 pr-2 text-zinc-400 dark:text-zinc-500">
           <Search className={`${isHome ? "h-6 w-6" : "h-5 w-5"}`} />
         </div>
         <input
@@ -148,7 +148,7 @@ export default function SearchBar({
                 ? "Buscar por título do artigo..."
                 : "Buscar por área de atuação..."
           }
-          className="h-full flex-1 bg-transparent outline-none text-zinc-900 placeholder-zinc-400 dark:text-zinc-100"
+          className="h-full flex-1 bg-transparent outline-none text-zinc-900 placeholder-zinc-400 dark:text-zinc-100 dark:placeholder-zinc-500"
         />
         {sugestoesLoading && (
           <div className="pr-2 text-zinc-400">
@@ -156,7 +156,7 @@ export default function SearchBar({
           </div>
         )}
         {query && !sugestoesLoading && (
-          <button type="button" onClick={handleClear} className="pr-2 text-zinc-400 hover:text-zinc-600">
+          <button type="button" onClick={handleClear} className="pr-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300">
             <X className="h-5 w-5" />
           </button>
         )}
@@ -165,7 +165,7 @@ export default function SearchBar({
             type="button"
             onClick={() => setShowFilters(!showFilters)}
             className={`mr-2 rounded-lg p-1.5 transition-colors ${
-              showFilters ? "bg-blue-100 text-blue-600" : "text-zinc-400 hover:text-zinc-600"
+              showFilters ? "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300" : "text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
             }`}
           >
             <SlidersHorizontal className="h-4 w-4" />
@@ -175,18 +175,18 @@ export default function SearchBar({
 
       {/* Suggestions dropdown */}
       {showSugestoes && sugestoes.length > 0 && (
-        <ul className="absolute left-0 right-0 top-full z-50 mt-1 overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
+        <ul className="absolute left-0 right-0 top-full z-50 mt-1 overflow-hidden rounded-xl border border-sky-200 bg-white shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
           {sugestoes.map((s, i) => (
             <li
               key={`${s.tipo}-${s.texto}`}
               onMouseDown={() => selectSugestao(s)}
               className={`flex cursor-pointer items-center gap-2 px-4 py-2.5 text-sm transition-colors ${
                 i === sugestaoIndex
-                  ? "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"
-                  : "text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                  ? "bg-sky-100 text-sky-700 dark:bg-sky-900 dark:text-sky-200"
+                  : "text-zinc-700 hover:bg-sky-50 dark:text-zinc-300 dark:hover:bg-zinc-800"
               }`}
             >
-              <span className="text-xs font-medium uppercase text-zinc-400">
+              <span className="text-xs font-medium uppercase text-zinc-400 dark:text-zinc-500">
                 {s.tipo === "pesquisador" ? "P" : s.tipo === "producao" ? "A" : "Á"}
               </span>
               <span className="truncate">{s.texto}</span>
@@ -198,7 +198,7 @@ export default function SearchBar({
       {/* Filters */}
       <div className={`mt-3 flex flex-wrap items-center gap-3 ${isHome ? "justify-center" : ""}`}>
         {!livre && (
-          <div className="flex items-center gap-2 rounded-lg border border-zinc-200 bg-white p-1 dark:border-zinc-700 dark:bg-zinc-900">
+          <div className="flex items-center gap-2 rounded-lg border border-sky-200 bg-white p-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             {[
               { value: "pesquisador", label: "Pesquisador" },
               { value: "producao", label: "Artigo" },
@@ -214,7 +214,7 @@ export default function SearchBar({
                 }}
                 className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
                   tipo === opt.value
-                    ? "bg-blue-600 text-white"
+                    ? "bg-sky-600 text-white"
                     : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
                 }`}
               >
@@ -229,17 +229,17 @@ export default function SearchBar({
             type="checkbox"
             checked={livre}
             onChange={() => setLivre(!livre)}
-            className="h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500"
+            className="h-4 w-4 rounded border-zinc-300 text-sky-600 focus:ring-sky-500 dark:border-zinc-600"
           />
           Pesquisa livre
           <Tooltip content="Escreva naturalmente, do seu jeito. Exemplo: em vez de buscar por &quot;inteligência artificial na educação&quot;, você pode buscar &quot;Liste os trabalhos relacionados com arboviroses&quot; — o sistema entende o contexto e encontra produções relacionadas.">
-            <Info className="ml-0.5 h-3.5 w-3.5 text-zinc-400 dark:text-zinc-500" />
+            <Info className="ml-0.5 h-3.5 w-3.5 text-zinc-400" />
           </Tooltip>
         </label>
 
         <button
           type="submit"
-          className={`rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-medium text-white transition-colors hover:bg-blue-700 ${
+          className={`rounded-lg bg-sky-600 px-4 py-1.5 text-xs font-medium text-white transition-colors hover:bg-sky-700 shadow-sm ${
             isHome ? "py-2 text-sm" : ""
           }`}
         >

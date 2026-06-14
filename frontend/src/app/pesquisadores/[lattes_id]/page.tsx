@@ -80,8 +80,8 @@ export default function PesquisadorDetalhePage() {
     }).finally(() => setLoading(false));
   }, [lattes_id]);
 
-  if (loading) return <p className="text-center text-zinc-400 py-20">Carregando...</p>;
-  if (!pesquisador) return <p className="text-center text-zinc-400 py-20">Pesquisador não encontrado.</p>;
+  if (loading) return <p className="text-center text-zinc-400 dark:text-zinc-500 py-20">Carregando...</p>;
+  if (!pesquisador) return <p className="text-center text-zinc-400 dark:text-zinc-500 py-20">Pesquisador não encontrado.</p>;
 
   // Producoes por ano
   const anoMap = new Map<number, number>();
@@ -144,16 +144,16 @@ export default function PesquisadorDetalhePage() {
   });
 
   const statCards = [
-    { label: "Produções", value: pesquisador.qtd_producoes ?? producoes.length, icon: BookOpen, color: "text-blue-600 bg-blue-50" },
-    { label: "Citações", value: pesquisador.qtd_citacoes_pesquisador ?? 0, icon: Quote, color: "text-emerald-600 bg-emerald-50" },
-    { label: "H-index", value: pesquisador.indice_h ?? 0, icon: Hash, color: "text-violet-600 bg-violet-50" },
-    { label: "I-10", value: pesquisador.indice_i10 ?? 0, icon: Award, color: "text-amber-600 bg-amber-50" },
+    { label: "Produções", value: pesquisador.qtd_producoes ?? producoes.length, icon: BookOpen, color: "text-sky-600 bg-sky-100" },
+    { label: "Citações", value: pesquisador.qtd_citacoes_pesquisador ?? 0, icon: Quote, color: "text-emerald-600 bg-emerald-100" },
+    { label: "H-index", value: pesquisador.indice_h ?? 0, icon: Hash, color: "text-violet-600 bg-violet-100" },
+    { label: "I-10", value: pesquisador.indice_i10 ?? 0, icon: Award, color: "text-amber-600 bg-amber-100" },
   ];
 
   return (
     <div className="space-y-8">
       {/* Back */}
-      <Link href="/pesquisadores" className="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300">
+      <Link href="/pesquisadores" className="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-sky-700 dark:text-zinc-400 dark:hover:text-sky-400">
         <ArrowLeft className="h-4 w-4" /> Voltar para pesquisadores
       </Link>
 
@@ -162,36 +162,36 @@ export default function PesquisadorDetalhePage() {
         <div className="flex items-center gap-5">
           {pesquisador.id_photo_lattes && (
             <img
-              src={`http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=${pesquisador.id_photo_lattes}`}
+              src={`https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=${pesquisador.id_photo_lattes}`}
               alt={`Foto de ${pesquisador.nome_completo}`}
-              className="h-20 w-20 shrink-0 rounded-full border border-zinc-200 object-cover dark:border-zinc-700"
+              className="h-20 w-20 shrink-0 rounded-full border border-sky-200 object-cover dark:border-sky-800"
               onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
             />
           )}
-          <h1 className="text-2xl font-bold">{pesquisador.nome_completo}</h1>
+          <h1 className="text-2xl font-bold dark:text-white">{pesquisador.nome_completo}</h1>
         </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {pesquisador.instituicao_empresa && (
             <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-              <Building2 className="h-4 w-4 shrink-0" /> {pesquisador.instituicao_empresa}
+              <Building2 className="h-4 w-4 shrink-0 text-sky-600" /> {pesquisador.instituicao_empresa}
             </div>
           )}
           {pesquisador.nacionalidade && (
             <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-              <Globe className="h-4 w-4 shrink-0" /> {pesquisador.nacionalidade}
+              <Globe className="h-4 w-4 shrink-0 text-sky-600" /> {pesquisador.nacionalidade}
             </div>
           )}
           {pesquisador.orcid_id && (
             <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-              <ExternalLink className="h-4 w-4 shrink-0" />
-              <a href={`https://orcid.org/${pesquisador.orcid_id}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+              <ExternalLink className="h-4 w-4 shrink-0 text-sky-600" />
+              <a href={`https://orcid.org/${pesquisador.orcid_id}`} target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:underline dark:text-sky-400">
                 {pesquisador.orcid_id}
               </a>
             </div>
           )}
           {pesquisador.data_atualizacao_lattes && (
             <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-              <Calendar className="h-4 w-4 shrink-0" /> Atualizado em {pesquisador.data_atualizacao_lattes}
+              <Calendar className="h-4 w-4 shrink-0 text-sky-600" /> Atualizado em {pesquisador.data_atualizacao_lattes}
             </div>
           )}
         </div>
@@ -202,7 +202,7 @@ export default function PesquisadorDetalhePage() {
             </p>
             <button
               onClick={() => setResumoExpandido(!resumoExpandido)}
-              className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+              className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300"
             >
               {resumoExpandido ? (
                 <>Mostrar menos <ChevronUp className="h-3 w-3" /></>
@@ -217,12 +217,12 @@ export default function PesquisadorDetalhePage() {
       {/* Stats */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {statCards.map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+          <div key={label} className="rounded-xl border border-sky-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             <div className={`mb-2 inline-flex rounded-lg p-2 ${color}`}>
               <Icon className="h-4 w-4" />
             </div>
-            <p className="text-2xl font-bold">{value}</p>
-            <p className="text-xs text-zinc-500">{label}</p>
+            <p className="text-2xl font-bold dark:text-white">{value}</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">{label}</p>
           </div>
         ))}
       </div>
@@ -230,7 +230,7 @@ export default function PesquisadorDetalhePage() {
       {/* Charts + Formacao */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Producoes por Tipo */}
-        <div className="rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="rounded-xl border border-sky-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
           <h2 className="mb-4 text-sm font-semibold text-zinc-700 dark:text-zinc-300">Publicações por Tipo</h2>
           {producoesPorTipo.length > 0 ? (
             <ResponsiveContainer width="100%" height={250}>
@@ -254,23 +254,23 @@ export default function PesquisadorDetalhePage() {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-sm text-zinc-400">Nenhum dado disponível.</p>
+            <p className="text-sm text-zinc-400 dark:text-zinc-500">Nenhum dado disponível.</p>
           )}
         </div>
 
         {/* Formacao */}
         {formacao.length > 0 && (
-          <div className="rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="rounded-xl border border-sky-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             <div className="mb-4 flex items-center gap-2">
-              <GraduationCap className="h-5 w-5 text-zinc-500" />
+              <GraduationCap className="h-5 w-5 text-sky-600" />
               <h2 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Formação Acadêmica</h2>
             </div>
             <div className="space-y-4">
             {formacao.map((f, i) => (
-              <div key={i} className="border-l-2 border-blue-200 pl-4 dark:border-blue-800">
-                <p className="text-sm font-medium">{f.tipo_formacao}</p>
+              <div key={i} className="border-l-2 border-sky-300 pl-4 dark:border-sky-700">
+                <p className="text-sm font-medium dark:text-zinc-200">{f.tipo_formacao}</p>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400">{f.nome_curso}</p>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-zinc-400 dark:text-zinc-500">
                   {f.nome_instituicao}
                   {f.ano_conclusao && ` · ${f.ano_conclusao}`}
                   {f.nome_orientador && ` · Orientador: ${f.nome_orientador}`}
@@ -284,16 +284,16 @@ export default function PesquisadorDetalhePage() {
 
       {/* Areas */}
       {areas.length > 0 && (
-        <div className="rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="rounded-xl border border-sky-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
           <div className="mb-4 flex items-center gap-2">
-            <Globe className="h-5 w-5 text-zinc-500" />
+            <Globe className="h-5 w-5 text-sky-600" />
             <h2 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Áreas de Atuação</h2>
           </div>
           <div className="flex flex-wrap gap-2">
             {areas.map((a, i) => (
               <span
                 key={i}
-                className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+                className="rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-sky-700 dark:bg-sky-900 dark:text-sky-300"
               >
                 {a.nome_area}
                 {a.nome_sub_area && ` / ${a.nome_sub_area}`}
@@ -304,16 +304,16 @@ export default function PesquisadorDetalhePage() {
       )}
 
       {/* Lista de Producoes com abas */}
-      <div className="rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="rounded-xl border border-sky-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
         <div className="mb-4 flex items-center gap-2">
-          <BookOpen className="h-5 w-5 text-zinc-500" />
+          <BookOpen className="h-5 w-5 text-sky-600" />
           <h2 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
             Produções ({producoes.length})
           </h2>
         </div>
 
         {/* Tabs */}
-        <div className="mb-4 flex flex-wrap gap-1 border-b border-zinc-200 pb-2 dark:border-zinc-700">
+        <div className="mb-4 flex flex-wrap gap-1 border-b border-sky-200 pb-2 dark:border-zinc-700">
           {TAB_DEFS.map((tab) => {
             const count =
               tab.key === "all"
@@ -328,8 +328,8 @@ export default function PesquisadorDetalhePage() {
                 onClick={() => { setProducoesTab(tab.key); setProdPagina(0); }}
                 className={`rounded-t-lg px-3 py-1.5 text-xs font-medium transition-colors ${
                   producoesTab === tab.key
-                    ? "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"
-                    : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+                    ? "bg-sky-100 text-sky-700 dark:bg-sky-900 dark:text-sky-200"
+                    : "text-zinc-500 hover:text-sky-600 hover:bg-sky-50 dark:text-zinc-400 dark:hover:text-sky-400 dark:hover:bg-zinc-800"
                 }`}
               >
                 {tab.label} ({count})
@@ -363,7 +363,7 @@ export default function PesquisadorDetalhePage() {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-sm text-zinc-400 py-8 text-center">Nenhum dado disponível para esta categoria.</p>
+            <p className="text-sm text-zinc-400 dark:text-zinc-500 py-8 text-center">Nenhum dado disponível para esta categoria.</p>
           )}
         </div>
 
@@ -373,10 +373,10 @@ export default function PesquisadorDetalhePage() {
             <button
               key={p.openalex_id}
               onClick={() => setSelectedId(p.openalex_id)}
-              className="group flex flex-col rounded-xl border border-zinc-200 p-4 text-left transition-all hover:border-blue-200 hover:shadow-sm dark:border-zinc-700 dark:hover:border-blue-700"
+              className="group flex flex-col rounded-xl border border-sky-200 p-4 text-left transition-all hover:border-sky-400 hover:shadow-sm bg-white dark:border-zinc-700 dark:bg-zinc-900 dark:hover:border-sky-700"
             >
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium leading-relaxed group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-3">
+                <p className="text-sm font-medium leading-relaxed group-hover:text-sky-600 line-clamp-3 dark:text-zinc-200 dark:group-hover:text-sky-400">
                   {p.titulo ?? "Sem título"}
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
@@ -386,22 +386,22 @@ export default function PesquisadorDetalhePage() {
                     </span>
                   )}
                   {p.ano_publicacao && (
-                    <span className="rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                    <span className="rounded-md bg-sky-100 px-2 py-0.5 text-xs font-medium text-sky-700 dark:bg-sky-900 dark:text-sky-300">
                       {p.ano_publicacao}
                     </span>
                   )}
                   {p.pesquisador && (
-                    <span className="rounded-md bg-purple-50 px-2 py-0.5 text-xs font-medium text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                    <span className="rounded-md bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-700 dark:bg-purple-950 dark:text-purple-300">
                       {p.pesquisador}
                     </span>
                   )}
                 </div>
                 {p.journal_name && (
-                  <p className="mt-2 text-xs text-zinc-400 line-clamp-1">{p.journal_name}</p>
+                  <p className="mt-2 text-xs text-zinc-500 line-clamp-1 dark:text-zinc-400">{p.journal_name}</p>
                 )}
               </div>
               {p.qtd_citacoes_producao !== null && p.qtd_citacoes_producao !== undefined && (
-                <div className="mt-3 flex items-center gap-1 text-xs text-zinc-500">
+                <div className="mt-3 flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
                   <Quote className="h-3 w-3" />
                   {p.qtd_citacoes_producao} citação(ões)
                 </div>
@@ -414,17 +414,17 @@ export default function PesquisadorDetalhePage() {
             <button
               onClick={() => setProdPagina((p) => Math.max(0, p - 1))}
               disabled={prodPagina === 0}
-              className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-zinc-800"
+              className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-sky-100 hover:text-sky-700 disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
             >
               <ChevronLeft className="h-4 w-4" /> Anterior
             </button>
-            <span className="text-sm text-zinc-500">
+            <span className="text-sm text-zinc-500 dark:text-zinc-400">
               {prodPagina + 1} de {Math.ceil(producoesFiltradas.length / ITENS_POR_PAG)}
             </span>
             <button
               onClick={() => setProdPagina((p) => p + 1)}
               disabled={(prodPagina + 1) * ITENS_POR_PAG >= producoesFiltradas.length}
-              className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-zinc-800"
+              className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-sky-100 hover:text-sky-700 disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
             >
               Próxima <ChevronRight className="h-4 w-4" />
             </button>
@@ -436,10 +436,10 @@ export default function PesquisadorDetalhePage() {
       {selectedId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/40" onClick={() => setSelectedId(null)} />
-          <div className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900">
+          <div className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-sky-200 bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900">
             <button
               onClick={() => setSelectedId(null)}
-              className="absolute right-4 top-4 rounded-lg p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-800"
+              className="absolute right-4 top-4 rounded-lg p-1 text-zinc-400 hover:bg-sky-100 hover:text-sky-600 dark:hover:bg-zinc-800 dark:hover:text-sky-400"
             >
               <X className="h-5 w-5" />
             </button>
@@ -450,18 +450,18 @@ export default function PesquisadorDetalhePage() {
               </div>
             ) : detail ? (
               <div className="space-y-5">
-                <h2 className="text-lg font-bold leading-relaxed pr-8">
+                <h2 className="text-lg font-bold leading-relaxed pr-8 dark:text-white">
                   {detail.titulo ?? "Sem título"}
                 </h2>
 
                 <div className="flex flex-wrap gap-2">
                   {detail.pesquisador && (
-                    <span className="rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                    <span className="rounded-full bg-purple-100 px-3 py-1 text-xs font-medium text-purple-700 dark:bg-purple-950 dark:text-purple-300">
                       {detail.pesquisador}
                     </span>
                   )}
                   {detail.ano_publicacao && (
-                    <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                    <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-sky-700 dark:bg-sky-900 dark:text-sky-300">
                       {detail.ano_publicacao}
                     </span>
                   )}
@@ -471,25 +471,25 @@ export default function PesquisadorDetalhePage() {
                     </span>
                   )}
                   {detail.idioma && (
-                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                    <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
                       {detail.idioma}
                     </span>
                   )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-lg bg-zinc-50 p-3 dark:bg-zinc-800">
+                  <div className="rounded-lg bg-sky-50 p-3 dark:bg-zinc-800">
                     <p className="text-xs text-zinc-400">Citações</p>
-                    <p className="text-lg font-bold">{detail.qtd_citacoes_producao ?? 0}</p>
+                    <p className="text-lg font-bold dark:text-white">{detail.qtd_citacoes_producao ?? 0}</p>
                   </div>
-                  <div className="rounded-lg bg-zinc-50 p-3 dark:bg-zinc-800">
+                  <div className="rounded-lg bg-sky-50 p-3 dark:bg-zinc-800">
                     <p className="text-xs text-zinc-400">Referências</p>
-                    <p className="text-lg font-bold">{detail.qtd_referencias_producao ?? 0}</p>
+                    <p className="text-lg font-bold dark:text-white">{detail.qtd_referencias_producao ?? 0}</p>
                   </div>
                   {detail.journal_name && (
-                    <div className="col-span-2 rounded-lg bg-zinc-50 p-3 dark:bg-zinc-800">
+                    <div className="col-span-2 rounded-lg bg-sky-50 p-3 dark:bg-zinc-800">
                       <p className="text-xs text-zinc-400">Periódico</p>
-                      <p className="text-sm font-medium">{detail.journal_name}</p>
+                      <p className="text-sm font-medium dark:text-zinc-200">{detail.journal_name}</p>
                     </div>
                   )}
                 </div>
@@ -510,12 +510,12 @@ export default function PesquisadorDetalhePage() {
                   </div>
                 )}
 
-                <div className="flex flex-wrap gap-2 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+                <div className="flex flex-wrap gap-2 pt-2 border-t border-sky-100 dark:border-zinc-700">
                   <a
                     href={`https://openalex.org/${detail.openalex_id}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 transition-colors shadow-sm"
                   >
                     <ExternalLink className="h-4 w-4" />
                     Abrir no OpenAlex
@@ -525,7 +525,7 @@ export default function PesquisadorDetalhePage() {
                       href={`https://doi.org/${detail.doi}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50 transition-colors dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-sky-300 px-4 py-2 text-sm font-medium text-sky-700 hover:bg-sky-50 transition-colors dark:border-sky-700 dark:text-sky-300 dark:hover:bg-zinc-800"
                     >
                       <FileText className="h-4 w-4" />
                       DOI
@@ -534,7 +534,7 @@ export default function PesquisadorDetalhePage() {
                 </div>
               </div>
             ) : (
-              <p className="text-center text-zinc-400 py-16">Não foi possível carregar os detalhes.</p>
+              <p className="text-center text-zinc-400 dark:text-zinc-500 py-16">Não foi possível carregar os detalhes.</p>
             )}
           </div>
         </div>

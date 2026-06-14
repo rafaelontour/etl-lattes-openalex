@@ -45,8 +45,8 @@ function AreasContent() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Áreas de Atuação</h1>
-        <p className="text-sm text-zinc-500 mt-1">
+        <h1 className="text-2xl font-bold dark:text-white">Áreas de Atuação</h1>
+        <p className="text-sm text-zinc-500 mt-1 dark:text-zinc-400">
           {q
             ? `${areas.length} área(s) encontrada(s) para "${q}"`
             : `${areas.length} grandes áreas encontradas na base de dados`}
@@ -55,7 +55,7 @@ function AreasContent() {
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-zinc-300 border-t-blue-600" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-zinc-300 border-t-blue-600 dark:border-zinc-600" />
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -92,7 +92,7 @@ function AreasContent() {
       )}
 
       {!loading && grandesAreas.size === 0 && (
-        <p className="text-center text-zinc-400 py-12">Nenhuma área encontrada.</p>
+        <p className="text-center text-zinc-400 dark:text-zinc-500 py-12">Nenhuma área encontrada.</p>
       )}
     </div>
   );

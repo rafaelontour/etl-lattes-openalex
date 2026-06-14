@@ -75,57 +75,57 @@ function PesquisadoresContent() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Pesquisadores</h1>
-        <p className="text-sm text-zinc-500 mt-1">
+        <h1 className="text-2xl font-bold dark:text-white">Pesquisadores</h1>
+         <p className="text-sm text-zinc-600 mt-1 dark:text-zinc-400">
           {data.length} pesquisador{data.length !== 1 ? "es" : ""} encontrado{data.length !== 1 ? "s" : ""}
         </p>
       </div>
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-zinc-300 border-t-blue-600" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-zinc-300 border-t-blue-600 dark:border-zinc-600" />
         </div>
       ) : data.length === 0 ? (
-        <p className="text-center text-zinc-400 py-12">Nenhum pesquisador encontrado.</p>
+        <p className="text-center text-zinc-500 dark:text-zinc-400 py-12">Nenhum pesquisador encontrado.</p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {data.map((p) => (
             <Link
               key={p.lattes_id}
               href={`/pesquisadores/${p.lattes_id}`}
-              className="group rounded-xl border border-zinc-200 bg-white p-5 transition-all hover:border-blue-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-blue-800"
+              className="group rounded-xl border border-sky-200 bg-white p-5 transition-all hover:border-sky-400 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900 dark:hover:border-sky-700"
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3 min-w-0">
                   {p.id_photo_lattes && (
                     <img
-                      src={`http://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=${p.id_photo_lattes}`}
+                      src={`https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=${p.id_photo_lattes}`}
                       alt={`Foto de ${p.nome_completo}`}
-                      className="h-10 w-10 shrink-0 rounded-full border border-zinc-200 object-cover dark:border-zinc-700"
+                      className="h-10 w-10 shrink-0 rounded-full border border-sky-200 object-cover dark:border-sky-800"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                     />
                   )}
-                  <h2 className="font-semibold text-zinc-900 group-hover:text-blue-600 dark:text-zinc-100 truncate">
+                  <h2 className="font-semibold text-zinc-900 group-hover:text-sky-600 truncate dark:text-zinc-100 dark:group-hover:text-sky-400">
                     {p.nome_completo}
                   </h2>
                 </div>
-                <ExternalLink className="h-4 w-4 shrink-0 text-zinc-300 group-hover:text-blue-500" />
+                <ExternalLink className="h-4 w-4 shrink-0 text-zinc-300 group-hover:text-sky-500 dark:text-zinc-600 dark:group-hover:text-sky-400" />
               </div>
               <div className="mt-3 grid grid-cols-3 gap-3 text-center text-xs">
                 <div>
-                  <p className="font-bold text-zinc-900 dark:text-zinc-100">{p.qtd_producoes ?? 0}</p>
-                  <p className="text-zinc-400">Produções</p>
+                  <p className="font-bold text-zinc-900 dark:text-white">{p.qtd_producoes ?? 0}</p>
+                  <p className="text-zinc-500 dark:text-zinc-400">Produções</p>
                 </div>
                 <div>
-                  <p className="font-bold text-zinc-900 dark:text-zinc-100">{p.qtd_citacoes_pesquisador ?? 0}</p>
-                  <p className="text-zinc-400">Citações</p>
+                  <p className="font-bold text-zinc-900 dark:text-white">{p.qtd_citacoes_pesquisador ?? 0}</p>
+                  <p className="text-zinc-500 dark:text-zinc-400">Citações</p>
                 </div>
                 <div>
-                  <p className="font-bold text-zinc-900 dark:text-zinc-100">{p.indice_h ?? 0}</p>
-                  <p className="text-zinc-400">H-index</p>
+                  <p className="font-bold text-zinc-900 dark:text-white">{p.indice_h ?? 0}</p>
+                  <p className="text-zinc-500 dark:text-zinc-400">H-index</p>
                 </div>
               </div>
-              <p className="mt-2 text-xs text-zinc-400 truncate">{p.instituicao_empresa ?? "—"}</p>
+              <p className="mt-2 text-xs text-zinc-500 truncate dark:text-zinc-400">{p.instituicao_empresa ?? "—"}</p>
             </Link>
           ))}
         </div>
@@ -135,15 +135,15 @@ function PesquisadoresContent() {
         <button
           onClick={() => setPage((p) => Math.max(1, p - 1))}
           disabled={page === 1}
-          className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-zinc-800"
+          className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-sky-100 hover:text-sky-700 disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
         >
           <ChevronLeft className="h-4 w-4" /> Anterior
         </button>
-        <span className="text-sm text-zinc-500">Página {page}</span>
+        <span className="text-sm text-zinc-500 dark:text-zinc-400">Página {page}</span>
         <button
           onClick={() => setPage((p) => p + 1)}
           disabled={data.length < 20}
-          className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-zinc-800"
+          className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-sky-100 hover:text-sky-700 disabled:opacity-40 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
         >
           Próxima <ChevronRight className="h-4 w-4" />
         </button>
@@ -154,7 +154,7 @@ function PesquisadoresContent() {
 
 export default function PesquisadoresPage() {
   return (
-    <Suspense fallback={<div className="flex justify-center py-12"><p className="text-zinc-400">Carregando...</p></div>}>
+    <Suspense fallback={<div className="flex justify-center py-12"><p className="text-zinc-400 dark:text-zinc-500">Carregando...</p></div>}>
       <PesquisadoresContent />
     </Suspense>
   );
