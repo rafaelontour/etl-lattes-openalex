@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Users, BookOpen, Grid3X3, BarChart3 } from "lucide-react";
+import { Search, Users, BookOpen, Grid3X3, BarChart3, PieChart } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
 const links = [
@@ -10,6 +10,7 @@ const links = [
   { href: "/pesquisadores", label: "Pesquisadores", icon: Users },
   { href: "/producoes", label: "Artigos", icon: BookOpen },
   { href: "/areas", label: "Áreas", icon: Grid3X3 },
+  { href: "/graficos", label: "Gráficos", icon: PieChart },
 ];
 
 export default function Navbar() {
